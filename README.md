@@ -1,4 +1,4 @@
-# Data Cleaning & Automation — Portfolio Project
+# Data Cleaning & Automation Dashboard
 
 This is a ready-to-run template for a **Data Cleaning & Automation** portfolio entry.
 It demonstrates automatic cleaning (duplicates removal, type parsing, missing value imputation),
