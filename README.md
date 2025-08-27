@@ -51,7 +51,9 @@ MIT
 ---
 ## 📊 Run the Interactive Dashboard (Plotly Dash)
 
-This app shows **statistics after cleaning** (missing values, outliers, numeric summary) and plots.
+This app shows **statistics after cleaning** (missing values, outliers, numeric summary) and plots
+<img width="938" height="440" alt="Product 1 " src="https://github.com/user-attachments/assets/d383c34d-0410-4266-9c1c-6367dda6463f" />
+
 
 ```bash
 pip install -r requirements.txt
