@@ -53,6 +53,8 @@ MIT
 
 This app shows **statistics after cleaning** (missing values, outliers, numeric summary) and plots
 <img width="938" height="440" alt="Product 1 " src="https://github.com/user-attachments/assets/d383c34d-0410-4266-9c1c-6367dda6463f" />
+<img width="959" height="392" alt="product 2" src="https://github.com/user-attachments/assets/51aa6970-4f61-4000-a402-4327b5af75a8" />
+
 
 
 ```bash
