@@ -1,0 +1,93 @@
+# data_cleaning_config.yaml
+project: "Retail Sales Cleaning & QA"
+version: 1
+
+io:
+  cleaned_filename: "cleaned.csv"
+  before_png: "sample_before.png"
+  after_png: "sample_after.png"
+  log_file: "cleaning_log.txt"
+
+parsing:
+  date_columns:
+    order_date:
+      formats: ["%Y-%m-%d", "%Y/%m/%d", "%d-%m-%Y"]
+      coerce_invalid_to_null: true
+  currency_symbols: ["$", "€", "£", "₹"]
+  numeric_hints: ["amount", "price", "sales", "revenue", "total", "cost"]
+  thousand_separators: [",", " "]
+  decimal_separators: [".", ","]
+
+standardize:
+  normalize_column_names: true
+  rename_map:
+    "Order ID": order_id
+    "Order Date": order_date
+    "Customer": customer
+    "SKU": sku
+    "Quantity": quantity
+    "Unit Price": unit_price
+    "Sales Amount": sales_amount
+    "Notes": notes
+  select_columns:
+    - order_id
+    - order_date
+    - customer
+    - sku
+    - quantity
+    - unit_price
+    - sales_amount
+    - notes
+
+deduplication:
+  enabled: true
+  subset_keys: [order_id, order_date, sku, quantity, unit_price, sales_amount]
+  keep: "first"
+
+missing_values:
+  strategy:
+    numeric: median
+    categorical: mode
+  per_column_fill:
+    notes: "Unknown"
+  drop_rows_if_any_null_in:
+    - sku
+
+casting:
+  dtypes:
+    order_id: int64
+    order_date: datetime
+    customer: string
+    sku: string
+    quantity: float64
+    unit_price: float64
+    sales_amount: float64
+    notes: string
+  safe_cast: true
+
+constraints:
+  non_negative:
+    - quantity
+    - unit_price
+    - sales_amount
+  computed_checks:
+    sales_amount_from_fields:
+      enabled: true
+      quantity_col: quantity
+      unit_price_col: unit_price
+      target_col: sales_amount
+      overwrite_if_deviation_pct_gt: 5
+
+outliers:
+  method: iqr
+  iqr_multiplier: 1.5
+  columns: [quantity, unit_price, sales_amount]
+  handle: cap
+  cap_limits: quantiles
+  cap_lower_q: 0.01
+  cap_upper_q: 0.99
+  flag_column_suffix: "_is_outlier"
+
+negatives:
+  handle: "set_null"
+  columns: [quantity, unit_price, sales_amount]
